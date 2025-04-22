@@ -2,13 +2,28 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateUserDTO } from 'src/dto/createUserDTO';
+import { plainToInstance } from 'class-transformer';
+const bcrypt = require('bcrypt');
 
 @Injectable()
 export class UserService {
     constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) { }
 
-    async createUser(user: User): Promise<User> {
-        return await this.userRepository.save(user);
+    async createUser(user: CreateUserDTO): Promise<CreateUserDTO> {
+        try {
+            let isUserExist = await this.userRepository.findOne({ where: { email: user.email } });
+            if (isUserExist) {
+                throw new Error('User already exists');
+            }
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+            user.password = hashedPassword;
+            const savedUser = await this.userRepository.save(user);
+            return plainToInstance(User, savedUser);
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
 
     async findUserById(id: number): Promise<User> {
