@@ -4,6 +4,8 @@ import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDTO } from 'src/dto/createUserDTO';
 import { plainToInstance } from 'class-transformer';
+import { LoginDTO } from 'src/dto/loginDTO';
+import { UserResponseDTO } from 'src/dto/userReponseDTO';
 const bcrypt = require('bcrypt');
 
 @Injectable()
@@ -44,5 +46,24 @@ export class UserService {
 
     async getAllUsers(): Promise<User[]> {
         return await this.userRepository.find();
+    }
+
+    async loginUser(loginUser: LoginDTO): Promise<UserResponseDTO> {
+        let user = await this.userRepository.findOne({ where: { email: loginUser.email } });
+        if (!user) {
+            throw new Error('Invalid password');
+        }
+        const isPasswordValid = await bcrypt.compare(loginUser.password, user.password);
+        if (!isPasswordValid) {
+            throw new Error('Invalid password');
+        }
+        const userResponse = new UserResponseDTO();
+        userResponse.id = user.id;
+        userResponse.name = user.name;
+        userResponse.email = user.email;
+        userResponse.role = user.role;
+        userResponse.createdAt = user.createdAt;
+        userResponse.updatedAt = user.updatedAt;
+        return userResponse;
     }
 }
