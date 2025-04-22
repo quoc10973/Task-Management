@@ -4,6 +4,10 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TestConnectionService } from './config/testConection';
+import { User } from './module/user/user.entity';
+import { Task } from './module/task/task.entity';
+import { UserModule } from './module/user/user.module';
+import { TaskModule } from './module/task/task.module';
 
 @Module({
   imports: [
@@ -21,11 +25,13 @@ import { TestConnectionService } from './config/testConection';
         username: configService.get('DB_USER'),
         password: configService.get('DB_PASS'),
         database: configService.get('DB_NAME'),
-        entities: [],
+        entities: [User, Task],
         synchronize: true,
       }),
       inject: [ConfigService],
     }),
+    UserModule,
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [AppService, TestConnectionService],
