@@ -99,5 +99,14 @@ export class TaskService {
             performedBy: userId,
             action: 'status_updated',
         });
+
+        // Gửi email thông báo cho người dùng
+        const user = await this.userRepo.findOne({ where: { id: userId } });
+        if (user) {
+            console.log("Sending email to user...");
+            await this.rabbitClient.emit('send_email', {
+                to: user.email,
+            });
+        }
     }
 }
