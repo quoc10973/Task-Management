@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import * as nodemailer from 'nodemailer';
 
 @Injectable()
-export class MailService {
+export class MailSenderService {
     constructor(private configService: ConfigService) { }
 
     async sendMail(to: string, subject: string, text: string) {

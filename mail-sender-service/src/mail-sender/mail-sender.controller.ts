@@ -1,10 +1,10 @@
 import { Controller } from '@nestjs/common';
-import { MailService } from './mail-sender.service';
+import { MailSenderService } from './mail-sender.service';
 import { EventPattern, Payload } from '@nestjs/microservices';
 
 @Controller()
-export class MailController {
-    constructor(private readonly mailService: MailService) { }
+export class MailSenderController {
+    constructor(private readonly mailService: MailSenderService) { }
 
     @EventPattern('send_email') // match với pattern bên producer
     async handleSendEmail(@Payload() data: any) {
