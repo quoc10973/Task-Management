@@ -62,7 +62,7 @@ const TaskPage = () => {
                     </div>
                 </div>
             ) : (
-                <p className="mb-4 text-gray-600">Bạn chưa nhận task nào.</p>
+                <p className="mb-4 text-gray-600">You have no tasks assigned.</p>
             )
             }
 
