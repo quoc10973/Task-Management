@@ -9,9 +9,9 @@ const AppRoutes = () => {
         <Routes>
             <Route path="/" element={<App />} >
                 <Route index element={<LoginPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/task" element={<TaskPage />} />
             </Route >
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/task" element={<TaskPage />} />
         </Routes>
     )
 }

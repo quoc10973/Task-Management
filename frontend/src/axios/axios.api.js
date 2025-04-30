@@ -9,6 +9,12 @@ const login = async (email, password) => {
     return axios.post(URL_API, data);
 }
 
+const getAvailableTasks = async () => {
+    const URL_API = "/tasks/available";
+    return axios.get(URL_API);
+}
+
 export {
     login,
+    getAvailableTasks
 }
