@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../context/userSession";
 
 const HeaderBar = () => {
+    const { user } = useContext(UserContext);
     return (
         <header className="bg-blue-600 text-white shadow-md">
             <div className="container mx-auto py-4 flex justify-between items-center">
@@ -16,10 +18,16 @@ const HeaderBar = () => {
                     <Link to="/profile" className="hover:underline">
                         Profile
                     </Link>
-                    <Link to="/my-tasks" className="hover:underline">
-                        My Tasks
+                    <Link to="/task" className="hover:underline">
+                        Tasks
                     </Link>
-
+                    {user ? (
+                        <span className="text-sm">Welcome, {user.name}</span>
+                    ) : (
+                        <Link to="/login" className="hover:underline">
+                            Login
+                        </Link>
+                    )}
                 </nav>
             </div>
         </header>

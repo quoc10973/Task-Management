@@ -3,15 +3,15 @@ import { createRoot } from 'react-dom/client'
 import "./index.css";
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './routes/route.jsx';
-import { ToastContainer } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
+import { UserProvider } from './context/userSession.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <AppRoutes >
-        <ToastContainer />
-      </AppRoutes>
+      <UserProvider>
+        <AppRoutes >
+        </AppRoutes>
+      </UserProvider>
     </BrowserRouter>
   </StrictMode>,
 )

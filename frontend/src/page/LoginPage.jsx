@@ -6,9 +6,6 @@ const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-
-    const navigate = useNavigate();
-
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
@@ -21,7 +18,7 @@ const LoginPage = () => {
 
             console.log("Đăng nhập thành công:", userData);
 
-            navigate("/task");
+            window.location.href = "/task";
         } catch (err) {
             setError("Login Failed: " + err.message);
         }
