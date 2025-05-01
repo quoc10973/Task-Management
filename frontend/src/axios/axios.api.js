@@ -14,7 +14,19 @@ const getAvailableTasks = async () => {
     return axios.get(URL_API);
 }
 
+const assignTask = async (taskId, userId) => {
+    const URL_API = `/tasks/${taskId}/assign/${userId}`;
+    return axios.post(URL_API);
+}
+
+const getMyTask = async (userId) => {
+    const URL_API = `/tasks/user/${userId}`;
+    return axios.get(URL_API);
+}
+
 export {
     login,
-    getAvailableTasks
+    getAvailableTasks,
+    assignTask,
+    getMyTask,
 }

@@ -36,6 +36,14 @@ export class TaskService {
         });
     }
 
+    async getTaskByUserId(userId: number): Promise<Task[]> {
+        const user = await this.userRepo.findOne({ where: { id: userId } });
+        if (!user) throw new NotFoundException('User not found');
+        return this.taskRepo.find({
+            where: { assignedTo: { id: userId } },
+        });
+    }
+
     // User assign a task
     async assignTask(taskId: number, userId: number): Promise<Task> {
         const user = await this.userRepo.findOne({ where: { id: userId } });

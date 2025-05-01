@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from 'src/dto/createTaskDTO';
 
@@ -16,6 +16,15 @@ export class TaskController {
     @Get('available')
     async getAvailableTasks() {
         return await this.taskService.getAvailableTasks();
+    }
+
+    @Get('user/:userId')
+    async getTaskByUserId(@Param('userId', ParseIntPipe) userId: number) {
+        try {
+            return await this.taskService.getTaskByUserId(userId);
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 
     // User take a task
