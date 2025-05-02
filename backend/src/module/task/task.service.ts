@@ -114,6 +114,8 @@ export class TaskService {
             console.log("Sending email to user...");
             await this.rabbitClient.emit('send_email', {
                 to: user.email,
+                taskTitle: task.title,
+                taskDescription: task.description,
             });
         }
     }

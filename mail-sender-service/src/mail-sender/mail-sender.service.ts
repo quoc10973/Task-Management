@@ -26,12 +26,15 @@ export class MailSenderService {
         console.log('Email sent: ' + info.response);
     }
 
-    async sendTaskUpdatedEmail(to: string) {
+    async sendTaskUpdatedEmail(to: string, taskTitle: string, taskDescription: string) {
         const subject = '✅ Your Task Has Been Successfully Updated: Completed';
         const text = `Hello,
 
         We are writing to inform you that your task has been successfully updated.
 
+        Here are the details:
+        📋 Task Title: ${taskTitle}
+        📜 Task Description: ${taskDescription}
         📝 Task Status: Completed  
         📅 Updated At: ${new Date().toLocaleString()}
 

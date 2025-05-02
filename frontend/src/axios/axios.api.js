@@ -24,9 +24,15 @@ const getMyTask = async (userId) => {
     return axios.get(URL_API);
 }
 
+const completeTask = async (taskId, userId) => {
+    const URL_API = `/tasks/${taskId}/complete/${userId}`;
+    return axios.post(URL_API);
+}
+
 export {
     login,
     getAvailableTasks,
     assignTask,
     getMyTask,
+    completeTask,
 }

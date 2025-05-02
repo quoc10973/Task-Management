@@ -1,5 +1,5 @@
-import { use, useContext, useEffect, useState } from "react";
-import { getAvailableTasks, assignTask, getMyTask } from "../axios/axios.api";
+import { useContext, useEffect, useState } from "react";
+import { getAvailableTasks, assignTask, getMyTask, completeTask } from "../axios/axios.api";
 import { UserContext } from "../context/userSession";
 
 const TaskPage = () => {
@@ -43,6 +43,8 @@ const TaskPage = () => {
                 `You have accepted the task: ${response.title} with ID: ${response.id}`
             )
             fetchTasks();
+            //reload
+            window.location.reload();
         } catch (error) {
             setMessage("Error accepting task: You already have an active task.");
         }
@@ -54,6 +56,8 @@ const TaskPage = () => {
             setMessage("Task completion requested. Processing...");
             // Optionally, you can refresh the task list after completing a task
             fetchTasks();
+            //reload 
+            window.location.reload();
         } catch (error) {
             setMessage("Error completing task: " + error.message);
         }
@@ -64,7 +68,7 @@ const TaskPage = () => {
     }, []);
 
     return (
-        <div className="max-w-7xl h-screen mx-auto p-10 py-10 bg-white shadow-md rounded-lg">
+        <div className="max-w-7xl  mx-auto p-10 py-10 bg-white shadow-md rounded-lg">
             <h1 className="text-2xl font-bold mb-4">Task Management</h1>
 
             {/* My Task Section */}
@@ -83,7 +87,7 @@ const TaskPage = () => {
                             <div>
                                 {myTask.status === "IN_PROGRESS" && (
                                     <button
-                                        onClick={() => handleComplete(myTask.id)}
+                                        onClick={() => handleComplete(myTask.id, user.id)}
                                         className="mt-2 bg-green-500 text-white px-3 py-1 rounded"
                                     >
                                         Mark as Completed

@@ -8,8 +8,8 @@ export class MailSenderController {
 
     @EventPattern('send_email') // match với pattern bên producer
     async handleSendEmail(@Payload() data: any) {
-        const { to } = data;
-        await this.mailService.sendTaskUpdatedEmail(to);
+        const { to, taskTitle, taskDescription } = data;
+        await this.mailService.sendTaskUpdatedEmail(to, taskTitle, taskDescription);
         console.log(`Email sent to ${to}`);
     }
 }
