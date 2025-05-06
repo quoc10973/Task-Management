@@ -5,7 +5,7 @@
 This is a simple **task management system** where users can:
 
 - Receive a task
-- Update task status (e.g., In Progress, Completed)
+- Update task status (e.g. Completed)
 
 When a user marks a task as **Completed**, the system:
 
