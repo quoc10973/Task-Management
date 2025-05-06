@@ -1,0 +1,1 @@
+kind create cluster --name=task-management-rabbitmq --config=kind-config.yaml

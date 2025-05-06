@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: task-backend
+  template:
+    metadata:
+      labels:
+        app: task-backend
+    spec:
+      containers:
+        - name: task-backend
+          image: quoc01973/task-backend:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: task-backend-config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: task-backend-config
+                  key: DB_PORT
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: task-backend-config
+                  key: DB_USER
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: task-backend-config
+                  key: DB_NAME
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: task-backend-config
+                  key: DB_PASSWORD
+            - name: RABBITMQ_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: task-backend-config
+                  key: RABBITMQ_URL
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: task-backend-config
+                  key: PORT
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: task-backend
+spec:
+  selector:
+    app: task-backend
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: task-backend-config
+data:
+  PORT: "8080"
+  DB_HOST: mysql
+  DB_PORT: "3306"
+  DB_USER: "root"
+  DB_PASSWORD: "mysql"
+  DB_NAME: "task_management"
+  RABBITMQ_URL: "amqp://user:password@rabbitmq:5672/"
+

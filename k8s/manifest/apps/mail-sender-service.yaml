@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mail-sender-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mail-sender-service
+  template:
+    metadata:
+      labels:
+        app: mail-sender-service
+    spec:
+      containers:
+        - name: mail-sender-service
+          image: quoc01973/task-mailsender:latest
+          env:
+            - name: RABBITMQ_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: mail-sender-config
+                  key: RABBITMQ_URL
+            - name: EMAIL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mail-service-secret
+                  key: EMAIL_USER
+            - name: EMAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mail-service-secret
+                  key: EMAIL_PASSWORD
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mail-sender-config
+data:
+  RABBITMQ_URL: "amqp://user:password@rabbitmq:5672/"   
