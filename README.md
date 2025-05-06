@@ -2,6 +2,8 @@
 
 ## 📌 Project Description
 
+![Image](https://github.com/user-attachments/assets/47d37211-ff78-4e67-8828-005e84cbab30)
+
 This is a simple **task management system** where users can:
 
 - Receive a task
