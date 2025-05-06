@@ -6,7 +6,7 @@ import { CreateUserDTO } from 'src/dto/createUserDTO';
 import { plainToInstance } from 'class-transformer';
 import { LoginDTO } from 'src/dto/loginDTO';
 import { UserResponseDTO } from 'src/dto/userReponseDTO';
-const bcrypt = require('bcrypt');
+import * as bcryptjs from 'bcryptjs';
 
 @Injectable()
 export class UserService {
@@ -19,7 +19,7 @@ export class UserService {
                 throw new Error('User already exists');
             }
             const saltRounds = 10;
-            const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+            const hashedPassword = await bcryptjs.hash(user.password, saltRounds);
             user.password = hashedPassword;
             const savedUser = await this.userRepository.save(user);
             return plainToInstance(User, savedUser);
@@ -53,7 +53,7 @@ export class UserService {
         if (!user) {
             throw new Error('Invalid password');
         }
-        const isPasswordValid = await bcrypt.compare(loginUser.password, user.password);
+        const isPasswordValid = await bcryptjs.compare(loginUser.password, user.password);
         if (!isPasswordValid) {
             throw new Error('Invalid password');
         }
