@@ -2,7 +2,7 @@
 
 ## 📌 Project Description
 
-![Image](https://github.com/user-attachments/assets/47d37211-ff78-4e67-8828-005e84cbab30)
+![Image](https://github.com/user-attachments/assets/7ba374a5-93f6-41a0-acbd-22d05e356e62)
 
 This is a simple **task management system** where users can:
 
